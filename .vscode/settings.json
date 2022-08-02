@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.theme": "php",
+        "*.inc": "php",
+        "stdio.h": "c"
+    }
+}
