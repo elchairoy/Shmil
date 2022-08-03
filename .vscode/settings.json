@@ -2,6 +2,9 @@
     "files.associations": {
         "*.theme": "php",
         "*.inc": "php",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "socket.h": "c",
+        "stdlib.h": "c",
+        "inet.h": "c"
     }
 }
