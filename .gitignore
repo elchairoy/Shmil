@@ -1,1 +1,3 @@
-bin/
+server/bin/
+client/bin/
+.vscode/*.log
