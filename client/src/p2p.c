@@ -15,15 +15,11 @@
 
 #define HOLE_PUNCHING 0x1234 /* The message to send to the other peer when I want to start hole-punching */
 
-int get_other_peer_addr(struct sockaddr_in *peer_addr)
+int get_other_peer_addr(int our_socket, struct sockaddr_in *peer_addr)
 {
-    int our_socket = 0;
     char *hello = "Hello from client"; /* The message to send to the server (could be any massage) */
     unsigned int len;                  /* The length of server_addr (needed for recvfrom) */
     struct sockaddr_in server_addr;
-
-    if ((our_socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0) /* Creates the socket */
-        return -1;
 
     /* Inserts the server_address (family, port and IP) to server_addr: */
     server_addr.sin_family = AF_INET;
@@ -43,19 +39,15 @@ int get_other_peer_addr(struct sockaddr_in *peer_addr)
                  &len) /* Gets the other peer's address from the server */
         < 0)
         return -1;
-    close(our_socket);
+
     return 0;
 }
 
-int udp_hole_punching(struct sockaddr_in peer_addr)
+int udp_hole_punching(int our_socket, struct sockaddr_in peer_addr)
 {
     /* We just need to send a message to the client */
 
-    int our_socket = 0;
     int message = HOLE_PUNCHING;
-
-    if ((our_socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0) /* Creates the socket */
-        return -1;
 
     /* Setup an entry for the peer on MY nat */
     if (sendto(our_socket, (const char *)&message, sizeof(message),

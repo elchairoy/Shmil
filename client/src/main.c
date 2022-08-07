@@ -20,23 +20,23 @@ int main(void)
     char *message = "Hello peer";
     char buffer[300];
     socklen_t size;
-
     struct sockaddr_in peer_addr;
-    if (get_other_peer_addr(&peer_addr) < 0)
+
+    if ((our_socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0) /* Creates the socket */
+        return -1;
+
+    if (get_other_peer_addr(our_socket, &peer_addr) < 0)
     {
         printf("Network error when trying to get other's peer address");
         return -1;
     }
     printf("peer: %s:%d\n", inet_ntoa(peer_addr.sin_addr), ntohs(peer_addr.sin_port));
 
-    if (udp_hole_punching(peer_addr) < 0)
+    if (udp_hole_punching(our_socket, peer_addr) < 0)
     {
         printf("Network error when trying to hole punch");
         return -1;
     }
-
-    if ((our_socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0) /* Creates the socket */
-        return -1;
 
     if (sendto(our_socket, (const char *)message, strlen(message),
                MSG_CONFIRM, (const struct sockaddr *)&peer_addr,
@@ -51,6 +51,8 @@ int main(void)
         return -1;
 
     printf("Got: %s\n", buffer);
+    
+    close(our_socket);
 
     return 0;
 }
