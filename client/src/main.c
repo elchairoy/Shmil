@@ -37,7 +37,7 @@ int main(void)
         printf("Network error when trying to hole punch");
         return -1;
     }
-    while 1
+    while (1)
     {
     	if (sendto(our_socket, (const char *)message, strlen(message),
        	MSG_CONFIRM, (const struct sockaddr *)&peer_addr,
