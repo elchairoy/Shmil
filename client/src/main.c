@@ -38,8 +38,7 @@ int main(void)
     if ((our_socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0) /* Creates the socket */
         return -1;
 
-    /* Setup an entry for the peer on MY nat */
-    if (sendto(our_socket, (const char *)&message, strlen(message),
+    if (sendto(our_socket, (const char *)message, strlen(message),
                MSG_CONFIRM, (const struct sockaddr *)&peer_addr,
                sizeof(peer_addr)) /* Sends the massage to the server */
         < 0)
