@@ -4,6 +4,6 @@
 typedef int make_iso_compilers_happy;
 
 #define SERVER_PORT 3910
-#define SERVER_IP "212.76.124.226"
+#define SERVER_IP "20.163.27.109"
 
 #endif
