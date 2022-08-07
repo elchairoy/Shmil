@@ -20,7 +20,7 @@ int main(void)
     if (get_other_peer_addr(&peer_addr) < 0)
     {
         printf("Network error when trying to get other's peer address");
-        return -1;  
+        return -1;
     }
     printf("peer: %s:%d\n", inet_ntoa(peer_addr.sin_addr), ntohs(peer_addr.sin_port));
 
