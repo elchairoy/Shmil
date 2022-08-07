@@ -37,20 +37,22 @@ int main(void)
         printf("Network error when trying to hole punch");
         return -1;
     }
+    while 1
+    {
+    	if (sendto(our_socket, (const char *)message, strlen(message),
+       	MSG_CONFIRM, (const struct sockaddr *)&peer_addr,
+       	sizeof(peer_addr)) /* Sends the massage to the server */
+		< 0)
+			return -1;
 
-    if (sendto(our_socket, (const char *)message, strlen(message),
-               MSG_CONFIRM, (const struct sockaddr *)&peer_addr,
-               sizeof(peer_addr)) /* Sends the massage to the server */
-        < 0)
-        return -1;
-
-    size = sizeof(peer_addr);
-    if (recvfrom(our_socket, buffer, 300, MSG_WAITALL, (struct sockaddr *)&peer_addr,
-                 &size) /* Gets the other peer's address from the server */
-        < 0)
-        return -1;
-
-    printf("Got: %s\n", buffer);
+    	size = sizeof(peer_addr);
+    	if (recvfrom(our_socket, buffer, 300, MSG_WAITALL, (struct sockaddr *)&peer_addr,
+         	&size) /* Gets the other peer's address from the server */
+		< 0)
+			return -1;
+			
+        printf("Got: %s\n", buffer);
+    }
     
     close(our_socket);
 
