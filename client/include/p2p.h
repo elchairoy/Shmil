@@ -11,4 +11,12 @@
  */
 int get_other_peer_addr(struct sockaddr_in *peer_addr);
 
+/**
+ * @brief Setups a P2P connection using the UDP Hole Punching method.
+ * 
+ * @param peer_addr The address of the other peer.
+ * @return int 0 on success, -1 on error.
+ */
+int udp_hole_punching(struct sockaddr_in peer_addr);
+
 #endif
