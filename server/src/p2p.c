@@ -20,6 +20,7 @@ int establish_p2p(int our_socket, struct sockaddr_in peer1_addr, struct sockaddr
         sendto(our_socket, &peer1_addr, sizeof(&peer1_addr),  
         MSG_CONFIRM, (const struct sockaddr *) &peer2_addr, 
             sizeof(peer2_addr)) < 0 /* Sends peer1 address to the peer2 */
+
     ) return -1;
 
     return 0;
