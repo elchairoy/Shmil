@@ -7,14 +7,20 @@
 #include <stdio.h>
 #include <unistd.h>
 
-int establish_p2p(int peer1, struct sockaddr_in peer1_addr, int peer2, struct sockaddr_in peer2_addr)
+int establish_p2p(int our_socket, struct sockaddr_in peer1_addr, struct sockaddr_in peer2_addr)
 {
-    printf("peer1: %s:%d\n", inet_ntoa(peer1_addr.sin_addr), ntohs(peer1_addr.sin_port));
+    /* Print the addresses. */
+    printf("peer1: %s:%d\n", inet_ntoa(peer1_addr.sin_addr), ntohs(peer1_addr.sin_port)); 
     printf("peer2: %s:%d\n", inet_ntoa(peer2_addr.sin_addr), ntohs(peer2_addr.sin_port));
 
-    if (
-        write(peer1, &peer2_addr, sizeof(peer2_addr)) < 0 ||
-        write(peer2, &peer1_addr, sizeof(peer1_addr)) < 0
+    if (sendto(our_socket, &peer2_addr, sizeof(&peer1_addr),  
+        MSG_CONFIRM, (const struct sockaddr *) &peer1_addr, 
+            sizeof(peer1_addr)) /* Sends peer2 address to the peer1 */ < 0 ||
+            
+        sendto(our_socket, &peer1_addr, sizeof(&peer1_addr),  
+        MSG_CONFIRM, (const struct sockaddr *) &peer2_addr, 
+            sizeof(peer2_addr)) < 0 /* Sends peer1 address to the peer2 */
+
     ) return -1;
 
     return 0;
