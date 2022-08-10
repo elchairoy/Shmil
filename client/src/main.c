@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <arpa/inet.h>
-
+#include <errno.h>
 #include <stdio.h>
 #include <netinet/in.h>
 
@@ -28,6 +28,7 @@ int main(void)
     if (get_other_peer_addr(our_socket, &peer_addr) < 0)
     {
         printf("Network error when trying to get other's peer address");
+	printf("Errno: %d\n", errno);
         return -1;
     }
     printf("peer: %s:%d\n", inet_ntoa(peer_addr.sin_addr), ntohs(peer_addr.sin_port));
@@ -45,13 +46,13 @@ int main(void)
 		< 0)
 			return -1;
 
-    	size = sizeof(peer_addr);
+    	/*size = sizeof(peer_addr);
     	if (recvfrom(our_socket, buffer, 300, MSG_WAITALL, (struct sockaddr *)&peer_addr,
-         	&size) /* Gets the other peer's address from the server */
-		< 0)
+         	&size)*/ /* Gets the other peer's address from the server */
+		/*< 0)
 			return -1;
 			
-        printf("Got: %s\n", buffer);
+        printf("Got: %s\n", buffer);*/
     }
     
     close(our_socket);
