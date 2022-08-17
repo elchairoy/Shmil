@@ -44,17 +44,19 @@ int main(void)
 					 &len1) /* Get a massage from peer1 and insert his address into peer1_addr */
 			< 0)
 		{
-			printf("Error occured getting a massage from client");
+			printf("Error occured getting first client");
 			return -1;
 		}
+		printf("Got first peer: %s:%d\n", inet_ntoa(peer1_addr.sin_addr), ntohs(peer1_addr.sin_port));
 		if (recvfrom(our_socket, (char *)buffer, MAX_MESSAGE_LEN,
 					 MSG_WAITALL, (struct sockaddr *)&peer2_addr,
 					 &len2) /* Get a massage from peer1 and insert his address into peer1_addr */
 			< 0)
 		{
-			printf("Error occured getting a massage from client");
+			printf("Error occured getting first client");
 			return -1;
 		}
+		printf("Got second peer: %s:%d\n", inet_ntoa(peer2_addr.sin_addr), ntohs(peer2_addr.sin_port));
 
 		if (establish_p2p(our_socket, peer1_addr, peer2_addr) /* Send the addresses of each peer to the second peer */ < 0)
 		{
