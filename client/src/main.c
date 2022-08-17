@@ -17,8 +17,7 @@
 int main(void)
 {
     int our_socket = 0;
-    char *message = "Hello peer";
-    char buffer[300];
+    char buffer[1000];
     socklen_t size;
     struct sockaddr_in peer_addr;
 
@@ -40,14 +39,15 @@ int main(void)
     }
     while (1)
     {
-    	if (sendto(our_socket, (const char *)message, strlen(message),
+	fgets(buffer, 1000, stdin);
+    	if (sendto(our_socket, (const char *)buffer, strlen(buffer),
        	MSG_CONFIRM, (const struct sockaddr *)&peer_addr,
        	sizeof(peer_addr)) /* Sends the massage to the server */
 		< 0)
 			return -1;
 
     	size = sizeof(peer_addr);
-    	if (recvfrom(our_socket, buffer, 300, MSG_WAITALL, (struct sockaddr *)&peer_addr,
+    	if (recvfrom(our_socket, buffer, 1000, MSG_WAITALL, (struct sockaddr *)&peer_addr,
          	&size) /* Gets the other peer's address from the server */
 		< 0)
 			return -1;
