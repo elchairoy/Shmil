@@ -46,13 +46,13 @@ int main(void)
 		< 0)
 			return -1;
 
-    	/*size = sizeof(peer_addr);
+    	size = sizeof(peer_addr);
     	if (recvfrom(our_socket, buffer, 300, MSG_WAITALL, (struct sockaddr *)&peer_addr,
-         	&size)*/ /* Gets the other peer's address from the server */
-		/*< 0)
+         	&size) /* Gets the other peer's address from the server */
+		< 0)
 			return -1;
 			
-        printf("Got: %s\n", buffer);*/
+        printf("Got: %s\n", buffer);
     }
     
     close(our_socket);
