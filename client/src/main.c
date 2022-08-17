@@ -39,20 +39,24 @@ int main(void)
     }
     while (1)
     {
-	fgets(buffer, 1000, stdin);
-    	if (sendto(our_socket, (const char *)buffer, strlen(buffer),
-       	MSG_CONFIRM, (const struct sockaddr *)&peer_addr,
-       	sizeof(peer_addr)) /* Sends the massage to the server */
+	/* Send */
+	printf("Enter a message to send:\n");
+	fgets(buffer, 1000, stdin);                  /* -1 to exclude the '\n' */
+    	if (sendto(our_socket, (const char *)buffer, strlen(buffer) - 1,
+        	MSG_CONFIRM, (const struct sockaddr *)&peer_addr,
+	       	sizeof(peer_addr)) /* Sends the massage to the server */
 		< 0)
 			return -1;
 
+	/* Get */
     	size = sizeof(peer_addr);
+	memset(buffer, 0, 1000); /* Reset the buffer */
     	if (recvfrom(our_socket, buffer, 1000, MSG_WAITALL, (struct sockaddr *)&peer_addr,
          	&size) /* Gets the other peer's address from the server */
 		< 0)
 			return -1;
 			
-        printf("Got: %s\n", buffer);
+        printf("Got from peer: %s\n", buffer);
     }
     
     close(our_socket);
